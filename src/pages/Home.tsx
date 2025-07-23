@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Search, Filter } from "lucide-react";
+import { MapPin, Search, Filter, Building2, Home as HomeIcon, Store, Warehouse } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import PropertyCard from "@/components/PropertyCard";
@@ -26,7 +26,7 @@ const Home = () => {
       location: "Suriyur Village, Thanjavur",
       price: "Rs.599 / Per Sq.ft",
       area: "1200 Sq.ft",
-      type: "Villa Plot",
+      type: "sale" as const,
       badge: "DTCP Approved",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop"
     },
@@ -36,7 +36,7 @@ const Home = () => {
       location: "Anna Nagar, Chennai",
       price: "Rs.8500 / Per Sq.ft",
       area: "950 Sq.ft",
-      type: "Apartment",
+      type: "rent" as const,
       badge: "Ready to Move",
       image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400&h=300&fit=crop"
     },
@@ -46,7 +46,7 @@ const Home = () => {
       location: "Coimbatore",
       price: "Rs.1200 / Per Sq.ft",
       area: "1500 Sq.ft",
-      type: "Villa",
+      type: "sale" as const,
       badge: "Premium",
       image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=300&fit=crop"
     }
@@ -93,6 +93,24 @@ const Home = () => {
               </Button>
             </div>
 
+            {/* Two Options Below Search Bar */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <Button 
+                variant="outline" 
+                className="bg-background/80 backdrop-blur-sm text-foreground border-border hover:bg-background/90"
+              >
+                <Building2 size={16} className="mr-2" />
+                Premium villa plots
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-background/80 backdrop-blur-sm text-foreground border-border hover:bg-background/90"
+              >
+                <MapPin size={16} className="mr-2" />
+                Explore properties
+              </Button>
+            </div>
+
             {/* Filter Options */}
             {showFilters && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
@@ -102,9 +120,8 @@ const Home = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="">All Types</SelectItem>
-                    <SelectItem value="villa">Villa</SelectItem>
-                    <SelectItem value="apartment">Apartment</SelectItem>
-                    <SelectItem value="plot">Plot</SelectItem>
+                    <SelectItem value="sale">For Sale</SelectItem>
+                    <SelectItem value="rent">For Rent</SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -135,19 +152,23 @@ const Home = () => {
         <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-lg sm:text-xl font-semibold mb-4">Browse by Category</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <div className="grid grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
               {[
-                { name: "Villa Plots", icon: "🏡" },
-                { name: "Apartments", icon: "🏢" },
-                { name: "Houses", icon: "🏠" },
-                { name: "Commercial", icon: "🏪" }
+                { name: "Villa Plots", icon: <HomeIcon size={20} /> },
+                { name: "Apartments", icon: <Building2 size={20} /> },
+                { name: "Houses", icon: <HomeIcon size={20} /> },
+                { name: "Commercial", icon: <Store size={20} /> }
               ].map((category, index) => (
-                <Card key={index} className="cursor-pointer hover:shadow-float transition-all duration-300">
-                  <CardContent className="p-3 sm:p-4 text-center">
-                    <div className="text-2xl sm:text-3xl mb-2">{category.icon}</div>
-                    <p className="text-xs sm:text-sm font-medium">{category.name}</p>
-                  </CardContent>
-                </Card>
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="h-16 sm:h-20 flex-col gap-1 hover:shadow-float transition-all duration-300"
+                >
+                  <div className="text-primary">
+                    {category.icon}
+                  </div>
+                  <span className="text-xs sm:text-sm font-medium">{category.name}</span>
+                </Button>
               ))}
             </div>
 
@@ -168,11 +189,9 @@ const Home = () => {
                   title={property.title}
                   location={property.location}
                   price={property.price}
-                  area={property.area}
                   type={property.type}
-                  badge={property.badge}
                   image={property.image}
-                  onClick={() => navigate(`/property/${property.id}`)}
+                  onCardClick={() => navigate(`/property/${property.id}`)}
                 />
               ))}
             </div>
