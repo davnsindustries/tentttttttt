@@ -1,5 +1,5 @@
 
-import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User } from "lucide-react";
+import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,38 +7,29 @@ import Layout from "@/components/Layout";
 import PropertyImageGallery from "@/components/PropertyImageGallery";
 import { useNavigate } from "react-router-dom";
 
-const PropertyDetails = () => {
+const ServiceDetails = () => {
   const navigate = useNavigate();
 
-  const proximities = [
-    "Cancer Institute",
-    "Olympic Academy", 
-    "Food Park",
-    "Bharathidasan University",
-    "MMM Hospital"
+  // Sample service images
+  const serviceImages = [
+    "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&h=600&fit=crop"
   ];
 
-  // Sample property images
-  const propertyImages = [
-    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?w=800&h=600&fit=crop"
-  ];
-
-  const propertyCoordinates = { lat: 10.7905, lng: 78.7047 };
-
-  // Property owner contact details
-  const ownerDetails = {
-    name: "Deva Sanjay",
+  // Service provider contact details
+  const providerDetails = {
+    name: "Expert AC Services",
+    ownerName: "Rajesh Kumar",
     phone: "+91 9876543210",
-    email: "devasanjay14@gmail.com",
-    role: "Property Owner"
+    email: "rajesh@expertac.com",
+    rating: 4.8,
+    experience: "8+ years",
+    services: ["AC Installation", "AC Repair", "AC Maintenance", "Duct Cleaning"]
   };
 
   const openGoogleMaps = () => {
-    const url = `https://www.google.com/maps?q=${propertyCoordinates.lat},${propertyCoordinates.lng}`;
+    const url = `https://www.google.com/maps?q=11.0168,76.9558`;
     window.open(url, '_blank');
   };
 
@@ -54,7 +45,7 @@ const PropertyDetails = () => {
             >
               <ArrowLeft size={18} />
             </button>
-            <h1 className="text-base sm:text-lg font-semibold">Property details</h1>
+            <h1 className="text-base sm:text-lg font-semibold">Service details</h1>
             <div className="flex items-center gap-1 sm:gap-2">
               <button className="p-2 rounded-full bg-background hover:bg-muted transition-colors">
                 <Share2 size={18} />
@@ -67,42 +58,52 @@ const PropertyDetails = () => {
         </div>
 
         <div className="p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
-          {/* Property Images */}
+          {/* Service Images */}
           <PropertyImageGallery 
-            images={propertyImages} 
-            title="Om Aathi Parasakthi Nagar" 
+            images={serviceImages} 
+            title={providerDetails.name} 
           />
 
-          {/* Property Info */}
+          {/* Service Info */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Badge variant="secondary" className="bg-tent-success text-white text-xs sm:text-sm">
-                Property ID: LMP-TPY-250722-003
+                AC Services
               </Badge>
+              <div className="flex items-center gap-1">
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <span className="text-sm font-medium">{providerDetails.rating}</span>
+              </div>
             </div>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
-              Om Aathi Parasakthi Nagar
+              {providerDetails.name}
             </h2>
             
             <p className="text-sm sm:text-base text-muted-foreground">
-              Investment Villa Plot - Suriyur Village, Thanjavur to Panjapur, 
-              Aathi Parasakthi Nagar, Tiruchirappalli
+              Professional AC installation, repair, and maintenance services in Coimbatore. 
+              Experienced technicians with quality service guarantee.
             </p>
           </div>
 
-          {/* Owner Contact Details */}
+          {/* Service Provider Contact Details */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
               <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
                 <User size={18} />
-                Property Owner
+                Service Provider
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-sm sm:text-base">{ownerDetails.name}</p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{ownerDetails.role}</p>
+                    <p className="font-medium text-sm sm:text-base">{providerDetails.ownerName}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {providerDetails.experience} experience
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium">{providerDetails.rating}</span>
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -110,7 +111,7 @@ const PropertyDetails = () => {
                     variant="outline" 
                     size="sm" 
                     className="flex items-center gap-2 text-xs sm:text-sm"
-                    onClick={() => window.open(`tel:${ownerDetails.phone}`)}
+                    onClick={() => window.open(`tel:${providerDetails.phone}`)}
                   >
                     <Phone size={14} />
                     Call Now
@@ -119,7 +120,7 @@ const PropertyDetails = () => {
                     variant="outline" 
                     size="sm" 
                     className="flex items-center gap-2 text-xs sm:text-sm"
-                    onClick={() => window.open(`mailto:${ownerDetails.email}`)}
+                    onClick={() => window.open(`mailto:${providerDetails.email}`)}
                   >
                     <Mail size={14} />
                     Email
@@ -129,26 +130,26 @@ const PropertyDetails = () => {
             </CardContent>
           </Card>
 
-          {/* Price Details */}
+          {/* Services Offered */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-3">Price details</h3>
-              <div className="space-y-2">
-                <div className="text-xl sm:text-2xl font-bold text-tent-primary">
-                  Rs.718800 / 1200 Sq.ft
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Per sq.ft rate: Rs.599
-                </div>
+              <h3 className="text-base sm:text-lg font-semibold mb-3">Services Offered</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {providerDetails.services.map((service, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-tent-primary rounded-full flex-shrink-0"></div>
+                    <span className="text-xs sm:text-sm text-foreground">{service}</span>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* Location */}
+          {/* Service Area */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-base sm:text-lg font-semibold">Location</h3>
+                <h3 className="text-base sm:text-lg font-semibold">Service Area</h3>
                 <Button
                   variant="outline"
                   size="sm"
@@ -167,64 +168,47 @@ const PropertyDetails = () => {
               >
                 <div className="text-center space-y-2">
                   <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-tent-primary mx-auto" />
-                  <div className="text-xs sm:text-sm text-muted-foreground">Click to view on Google Maps</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Click to view service area</div>
                 </div>
               </div>
               
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Suriyur Village, Thanjavur to Panjapur, Aathi Parasakthi Nagar
+                Serving all areas in Coimbatore and surrounding districts
               </p>
             </CardContent>
           </Card>
 
-          {/* Property Details */}
+          {/* About Service */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-3">Property Details</h3>
+              <h3 className="text-base sm:text-lg font-semibold mb-3">About Service</h3>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Athiparasakthi Nagar, offered by Velchoice Properties Pvt. Ltd., is 
-                a premium residential layout located on the Madurai to 
-                Thuvarankurichi Ring Road, just minutes away from Trichy city. 
-                Priced affordably at just ₹599 per sq.ft, this DTCP-approved 
-                layout is a golden opportunity for those looking to build their 
-                dream home or invest smartly in a fast-developing area.
+                Expert AC Services provides comprehensive air conditioning solutions with over 8 years 
+                of experience. We specialize in installation, repair, and maintenance of all AC brands. 
+                Our certified technicians ensure quality service with warranty on all work. 
+                Available for emergency repairs and scheduled maintenance.
               </p>
             </CardContent>
           </Card>
 
-          {/* Amenities */}
+          {/* Pricing */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-3">Amenities</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">No amenities available.</p>
-            </CardContent>
-          </Card>
-
-          {/* Proximities */}
-          <Card className="shadow-card">
-            <CardContent className="p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold mb-3">Proximities</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {proximities.map((proximity, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-tent-primary rounded-full flex-shrink-0"></div>
-                    <span className="text-xs sm:text-sm text-muted-foreground">{proximity}</span>
-                  </div>
-                ))}
+              <h3 className="text-base sm:text-lg font-semibold mb-3">Pricing</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">AC Installation</span>
+                  <span className="text-sm font-medium">₹2,500 onwards</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">AC Repair</span>
+                  <span className="text-sm font-medium">₹500 onwards</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">AC Service</span>
+                  <span className="text-sm font-medium">₹800 onwards</span>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Apps Availability */}
-          <Card className="shadow-card">
-            <CardContent className="p-4 sm:p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <h3 className="text-base sm:text-lg font-semibold">Apps availability</h3>
-                <Badge variant="secondary" className="bg-tent-success text-white text-xs">
-                  New
-                </Badge>
-              </div>
-              <p className="text-xs sm:text-sm text-muted-foreground">Null</p>
             </CardContent>
           </Card>
         </div>
@@ -233,11 +217,21 @@ const PropertyDetails = () => {
         <div className="sticky bottom-0 bg-card border-t border-border p-3 sm:p-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-center sm:text-left">
-              <div className="text-lg sm:text-xl font-bold text-tent-primary">Rs.599 / Per Sq.ft</div>
+              <div className="text-lg sm:text-xl font-bold text-tent-primary">Starting ₹500</div>
             </div>
-            <Button variant="hero" size="lg" className="px-6 sm:px-8 w-full sm:w-auto">
-              Book Now
-            </Button>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="flex-1 sm:flex-none"
+                onClick={() => window.open(`tel:${providerDetails.phone}`)}
+              >
+                Call Now
+              </Button>
+              <Button variant="hero" size="lg" className="flex-1 sm:flex-none">
+                Book Service
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -245,4 +239,4 @@ const PropertyDetails = () => {
   );
 };
 
-export default PropertyDetails;
+export default ServiceDetails;

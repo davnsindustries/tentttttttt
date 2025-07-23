@@ -1,3 +1,4 @@
+
 import { Home, Heart, MessageCircle, User, PlusCircle } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -9,7 +10,7 @@ const BottomNavigation = () => {
   const navItems = [
     { icon: Home, label: "Explore", path: "/" },
     { icon: Heart, label: "Wishlist", path: "/wishlist" },
-    { icon: PlusCircle, label: "Onboard", path: "/post" },
+    { icon: PlusCircle, label: "Feed", path: "/post" },
     { icon: MessageCircle, label: "Chat", path: "/chat" },
     { icon: User, label: "Profile", path: "/profile" },
   ];
@@ -26,12 +27,12 @@ const BottomNavigation = () => {
               key={item.path}
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col items-center justify-center p-2 min-w-0 flex-1 relative",
-                isActive ? "text-primary" : "text-muted-foreground"
+                "flex flex-col items-center justify-center p-2 min-w-0 flex-1 relative transition-all duration-200",
+                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
               )}
             >
               {index === 2 && (
-                <div className="absolute -top-4 bg-primary rounded-full p-3 shadow-button">
+                <div className="absolute -top-4 bg-gradient-primary rounded-full p-3 shadow-button hover:shadow-float transition-all duration-200 hover:scale-105">
                   <Icon size={20} className="text-primary-foreground" />
                 </div>
               )}

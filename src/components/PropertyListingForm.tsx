@@ -21,6 +21,59 @@ const PropertyListingForm = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Property Images - Moved to top */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Property Images</Label>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+              id="property-images"
+              disabled={uploadedImages.length >= 15}
+            />
+            <label 
+              htmlFor="property-images" 
+              className={`flex items-center gap-2 px-4 py-2 border border-input rounded-md cursor-pointer hover:bg-accent transition-colors text-sm ${
+                uploadedImages.length >= 15 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <Upload size={16} />
+              Upload Images ({uploadedImages.length}/15)
+            </label>
+          </div>
+          
+          {uploadedImages.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {uploadedImages.map((image, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`Property ${index + 1}`}
+                    className="w-full h-20 sm:h-24 object-cover rounded-lg border border-border"
+                  />
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={() => removeImage(index)}
+                  >
+                    <X size={12} />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Upload up to 15 images of your property. Supported formats: JPG, PNG, WEBP
+          </p>
+        </div>
+      </div>
+
       {/* Legal Name */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Legal name</Label>
@@ -41,7 +94,7 @@ const PropertyListingForm = () => {
         </p>
       </div>
 
-      {/* Phone Number */}
+      {/* Phone Number - Added */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Phone number</Label>
         <Input placeholder="Phone number" className="text-sm sm:text-base" />
@@ -111,59 +164,6 @@ const PropertyListingForm = () => {
         <p className="text-xs sm:text-sm text-muted-foreground">
           Paste the Google Maps link for your property location
         </p>
-      </div>
-
-      {/* Property Images */}
-      <div className="space-y-3">
-        <Label className="text-sm sm:text-base font-medium">Property Images</Label>
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              className="hidden"
-              id="property-images"
-              disabled={uploadedImages.length >= 15}
-            />
-            <label 
-              htmlFor="property-images" 
-              className={`flex items-center gap-2 px-4 py-2 border border-input rounded-md cursor-pointer hover:bg-accent transition-colors text-sm ${
-                uploadedImages.length >= 15 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <Upload size={16} />
-              Upload Images ({uploadedImages.length}/15)
-            </label>
-          </div>
-          
-          {uploadedImages.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-              {uploadedImages.map((image, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Property ${index + 1}`}
-                    className="w-full h-20 sm:h-24 object-cover rounded-lg border border-border"
-                  />
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => removeImage(index)}
-                  >
-                    <X size={12} />
-                  </Button>
-                </div>
-              ))}
-            </div>
-          )}
-          
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Upload up to 15 images of your property. Supported formats: JPG, PNG, WEBP
-          </p>
-        </div>
       </div>
     </div>
   );
