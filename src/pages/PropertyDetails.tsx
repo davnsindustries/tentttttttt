@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
+import PropertyImageGallery from "@/components/PropertyImageGallery";
 import { useNavigate } from "react-router-dom";
 
 const PropertyDetails = () => {
@@ -15,6 +16,15 @@ const PropertyDetails = () => {
     "Food Park",
     "Bharathidasan University",
     "MMM Hospital"
+  ];
+
+  // Sample property images - in a real app, these would come from the uploaded images
+  const propertyImages = [
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?w=800&h=600&fit=crop"
   ];
 
   const propertyCoordinates = { lat: 10.7905, lng: 78.7047 };
@@ -49,19 +59,11 @@ const PropertyDetails = () => {
         </div>
 
         <div className="p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
-          {/* Property Layout Image */}
-          <Card className="overflow-hidden shadow-card">
-            <div className="bg-gradient-to-br from-muted/50 to-muted p-4 sm:p-6 lg:p-8 text-center">
-              <div className="grid grid-cols-4 gap-2 sm:gap-3 lg:gap-4 mb-4 max-w-lg mx-auto">
-                {Array.from({ length: 16 }, (_, i) => (
-                  <div key={i} className="aspect-square bg-tent-warning/20 rounded border border-tent-warning/40 flex items-center justify-center text-xs font-medium">
-                    {i + 1}
-                  </div>
-                ))}
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Layout Plan Available</div>
-            </div>
-          </Card>
+          {/* Property Images */}
+          <PropertyImageGallery 
+            images={propertyImages} 
+            title="Om Aathi Parasakthi Nagar" 
+          />
 
           {/* Property Info */}
           <div className="space-y-3">
