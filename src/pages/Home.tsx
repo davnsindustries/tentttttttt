@@ -13,8 +13,8 @@ import PropertyCard from "@/components/PropertyCard";
 const Home = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [priceRange, setPriceRange] = useState("");
+  const [propertyType, setPropertyType] = useState("all");
+  const [priceRange, setPriceRange] = useState("all");
   const [location, setLocation] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
@@ -56,7 +56,7 @@ const Home = () => {
     return (
       (searchTerm === "" || property.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
        property.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (propertyType === "" || property.type.toLowerCase().includes(propertyType.toLowerCase())) &&
+      (propertyType === "all" || property.type.toLowerCase().includes(propertyType.toLowerCase())) &&
       (location === "" || property.location.toLowerCase().includes(location.toLowerCase()))
     );
   });
@@ -119,7 +119,7 @@ const Home = () => {
                     <SelectValue placeholder="Property Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Types</SelectItem>
+                    <SelectItem value="all">All Types</SelectItem>
                     <SelectItem value="sale">For Sale</SelectItem>
                     <SelectItem value="rent">For Rent</SelectItem>
                   </SelectContent>
@@ -130,7 +130,7 @@ const Home = () => {
                     <SelectValue placeholder="Price Range" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Prices</SelectItem>
+                    <SelectItem value="all">All Prices</SelectItem>
                     <SelectItem value="low">Below Rs.1000/sq.ft</SelectItem>
                     <SelectItem value="mid">Rs.1000-5000/sq.ft</SelectItem>
                     <SelectItem value="high">Above Rs.5000/sq.ft</SelectItem>
