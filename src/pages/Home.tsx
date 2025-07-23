@@ -98,16 +98,18 @@ const Home = () => {
               <Button 
                 variant="outline" 
                 className="bg-background/80 backdrop-blur-sm text-foreground border-border hover:bg-background/90"
+                onClick={() => navigate('/')}
               >
                 <Building2 size={16} className="mr-2" />
-                Premium villa plots
+                Explore properties
               </Button>
               <Button 
                 variant="outline" 
                 className="bg-background/80 backdrop-blur-sm text-foreground border-border hover:bg-background/90"
+                onClick={() => navigate('/services')}
               >
-                <MapPin size={16} className="mr-2" />
-                Explore properties
+                <Store size={16} className="mr-2" />
+                Services
               </Button>
             </div>
 
