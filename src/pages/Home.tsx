@@ -15,8 +15,19 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [propertyType, setPropertyType] = useState("all");
   const [priceRange, setPriceRange] = useState("all");
-  const [location, setLocation] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+
+  // Tamil Nadu districts
+  const districts = [
+    "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
+    "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Kanniyakumari", "Karur",
+    "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris",
+    "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga",
+    "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
+    "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore",
+    "Viluppuram", "Virudhunagar"
+  ].sort();
 
   // Sample property data
   const properties = [
@@ -57,7 +68,7 @@ const Home = () => {
       (searchTerm === "" || property.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
        property.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (propertyType === "all" || property.type.toLowerCase().includes(propertyType.toLowerCase())) &&
-      (location === "" || property.location.toLowerCase().includes(location.toLowerCase()))
+      (selectedDistrict === "" || property.location.toLowerCase().includes(selectedDistrict.toLowerCase()))
     );
   });
 
@@ -142,12 +153,19 @@ const Home = () => {
                   </SelectContent>
                 </Select>
 
-                <Input
-                  placeholder="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="text-sm hover-glow transition-all duration-300 focus:scale-[1.02]"
-                />
+                <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
+                  <SelectTrigger className="text-sm hover-glow transition-all duration-300 hover:scale-[1.02] bg-background border-border z-50">
+                    <SelectValue placeholder="Select District" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border shadow-lg z-50 max-h-[200px] overflow-y-auto">
+                    <SelectItem value="">All Districts</SelectItem>
+                    {districts.map((district) => (
+                      <SelectItem key={district} value={district} className="hover:bg-accent hover:text-accent-foreground">
+                        {district}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             )}
           </div>

@@ -13,9 +13,20 @@ const Services = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [serviceCategory, setServiceCategory] = useState("");
-  const [location, setLocation] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [showAllServices, setShowAllServices] = useState(false);
+
+  // Tamil Nadu districts
+  const districts = [
+    "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
+    "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Kanniyakumari", "Karur",
+    "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris",
+    "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga",
+    "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
+    "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore",
+    "Viluppuram", "Virudhunagar"
+  ].sort();
 
   const services = [
     { id: "1", icon: Snowflake, title: "AC Services" },
@@ -100,12 +111,19 @@ const Services = () => {
                   </SelectContent>
                 </Select>
 
-                <Input
-                  placeholder="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="text-sm"
-                />
+                <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
+                  <SelectTrigger className="text-sm bg-background border-border z-50">
+                    <SelectValue placeholder="Select District" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border shadow-lg z-50 max-h-[200px] overflow-y-auto">
+                    <SelectItem value="">All Districts</SelectItem>
+                    {districts.map((district) => (
+                      <SelectItem key={district} value={district} className="hover:bg-accent hover:text-accent-foreground">
+                        {district}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             )}
           </div>
