@@ -1,4 +1,4 @@
-import { ArrowLeft, Send, Smile } from "lucide-react";
+import { ArrowLeft, Send, Smile, Building2, Store } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,27 @@ const Chat = () => {
           <p className="text-muted-foreground text-center mb-8">
             You're now chatting with the sales team
           </p>
+          
+          {/* Quick Options */}
+          <div className="space-y-3 w-full max-w-sm">
+            <p className="text-sm font-medium text-center mb-4">Quick Options</p>
+            <Button 
+              variant="outline" 
+              className="w-full justify-start gap-2"
+              onClick={() => navigate('/post-property')}
+            >
+              <Building2 size={16} />
+              Property Listing
+            </Button>
+            <Button 
+              variant="outline" 
+              className="w-full justify-start gap-2"
+              onClick={() => navigate('/post-property')}
+            >
+              <Store size={16} />
+              Property Service
+            </Button>
+          </div>
         </div>
 
         {/* Message Input */}

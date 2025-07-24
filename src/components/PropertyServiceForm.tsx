@@ -130,8 +130,50 @@ const PropertyServiceForm = () => {
             <SelectItem value="civil">Civil mason</SelectItem>
             <SelectItem value="painting">Painting</SelectItem>
             <SelectItem value="demolition">Demolition</SelectItem>
+            <SelectItem value="construction">Construction & Contractors</SelectItem>
+            <SelectItem value="landscaping">Landscaping & Gardening</SelectItem>
+            <SelectItem value="security">Security Systems</SelectItem>
+            <SelectItem value="roofing">Roofing & Waterproofing</SelectItem>
+            <SelectItem value="flooring">Flooring & Tiling</SelectItem>
+            <SelectItem value="cleaning">Cleaning & Maintenance</SelectItem>
+            <SelectItem value="interiors">Interior Design</SelectItem>
+            <SelectItem value="glass">Glass & Aluminum Work</SelectItem>
+            <SelectItem value="steel">Steel Fabrication</SelectItem>
+            <SelectItem value="solar">Solar Installation</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Service Description */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Service Description</Label>
+        <Input placeholder="Brief description of your services" className="text-sm sm:text-base" />
+      </div>
+
+      {/* Gender */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Gender</Label>
+        <Select>
+          <SelectTrigger className="text-sm sm:text-base">
+            <SelectValue placeholder="Select gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="male">Male</SelectItem>
+            <SelectItem value="female">Female</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Available Days */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Available Days</Label>
+        <Input placeholder="e.g., Monday to Friday, All days" className="text-sm sm:text-base" />
+      </div>
+
+      {/* Experience */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Experience (Years)</Label>
+        <Input placeholder="Years of experience" className="text-sm sm:text-base" type="number" />
       </div>
 
       {/* PIN Code */}

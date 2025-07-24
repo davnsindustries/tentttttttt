@@ -177,6 +177,12 @@ const Services = () => {
               </Collapsible>
             )}
 
+            {/* Coming Soon Section */}
+            <div className="mt-8 p-4 bg-muted/50 rounded-lg border border-border">
+              <h3 className="font-semibold text-lg mb-2">Coming Soon</h3>
+              <p className="text-muted-foreground text-sm">Next service: Search for builders - Find qualified builders for your construction projects</p>
+            </div>
+
             {filteredServices.length === 0 && (
               <div className="text-center py-8">
                 <p className="text-muted-foreground">No services found matching your criteria.</p>

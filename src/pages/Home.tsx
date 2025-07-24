@@ -67,12 +67,13 @@ const Home = () => {
         {/* Header */}
         <div className="bg-gradient-hero px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-2">
-              Find Your Dream Property
-            </h1>
-            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
-              Discover the perfect property for your needs
-            </p>
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="text-primary" size={20} />
+              <div>
+                <h1 className="text-lg sm:text-xl font-semibold text-foreground">Current Location</h1>
+                <p className="text-sm text-muted-foreground">Thanjavur, Tamil Nadu</p>
+              </div>
+            </div>
             
             {/* Search Bar */}
             <div className="relative mb-4">
