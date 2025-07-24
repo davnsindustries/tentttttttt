@@ -245,10 +245,23 @@ const ServiceProviders = () => {
                             <Phone size={14} />
                             Call
                           </Button>
-                          <Button variant="outline" size="sm" className="flex items-center gap-1">
-                            <MessageCircle size={14} />
-                            Chat
-                          </Button>
+                           <Button 
+                             variant="outline" 
+                             size="sm" 
+                             className="flex items-center gap-1"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               navigate('/chat', { 
+                                 state: { 
+                                   name: provider.name, 
+                                   avatar: provider.name[0].toUpperCase() 
+                                 } 
+                               });
+                             }}
+                           >
+                             <MessageCircle size={14} />
+                             Chat
+                           </Button>
                         </div>
                       </div>
                     </div>

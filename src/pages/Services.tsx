@@ -19,21 +19,21 @@ const Services = () => {
 
   const services = [
     { id: "1", icon: Snowflake, title: "AC Services" },
-    { id: "2", icon: Zap, title: "Electrical Services" },
-    { id: "3", icon: Wrench, title: "Plumbing Services" },
-    { id: "4", icon: Paintbrush, title: "Painting Services" },
-    { id: "5", icon: Hammer, title: "Carpentry Services" },
-    { id: "6", icon: Building, title: "Civil Mason" },
-    { id: "7", icon: TreePine, title: "Landscaping" },
-    { id: "8", icon: Truck, title: "Moving Services" },
-    { id: "9", icon: Drill, title: "Drilling Services" },
-    { id: "10", icon: Shield, title: "Waterproofing" },
-    { id: "11", icon: Thermometer, title: "HVAC Services" },
-    { id: "12", icon: Wifi, title: "Internet Installation" },
-    { id: "13", icon: Camera, title: "Security Systems" },
-    { id: "14", icon: Car, title: "Garage Services" },
-    { id: "15", icon: Lightbulb, title: "Lighting Services" },
-    { id: "16", icon: Droplets, title: "Water Services" }
+    { id: "2", icon: Zap, title: "Electricals & Plumbing" },
+    { id: "3", icon: Hammer, title: "Carpentry" },
+    { id: "4", icon: Building, title: "Civil mason" },
+    { id: "5", icon: Paintbrush, title: "Painting" },
+    { id: "6", icon: Pickaxe, title: "Demolition" },
+    { id: "7", icon: Building, title: "Construction & Contractors" },
+    { id: "8", icon: TreePine, title: "Landscaping & Gardening" },
+    { id: "9", icon: Camera, title: "Security Systems" },
+    { id: "10", icon: Shield, title: "Roofing & Waterproofing" },
+    { id: "11", icon: Drill, title: "Flooring & Tiling" },
+    { id: "12", icon: Wrench, title: "Cleaning & Maintenance" },
+    { id: "13", icon: Lightbulb, title: "Interior Design" },
+    { id: "14", icon: Thermometer, title: "Glass & Aluminum Work" },
+    { id: "15", icon: Truck, title: "Steel Fabrication" },
+    { id: "16", icon: Droplets, title: "Solar Installation" }
   ];
 
   const filteredServices = services.filter(service => {
