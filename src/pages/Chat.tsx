@@ -223,9 +223,9 @@ const Chat = () => {
   // Main chat list view
   return (
     <Layout>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background animate-fade-in">
         {/* Header */}
-        <div className="bg-card border-b border-border px-4 py-3 flex items-center gap-3">
+        <div className="bg-card border-b border-border px-4 py-3 flex items-center gap-3 animate-slide-in-right">
           <Button 
             variant="ghost" 
             size="sm" 
@@ -238,25 +238,26 @@ const Chat = () => {
         </div>
 
         {/* Tabs for Property Listing and Property Service */}
-        <div className="p-4">
+        <div className="p-4 animate-scale-in">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="property-listing" className="flex items-center gap-2">
+              <TabsTrigger value="property-listing" className="flex items-center gap-2 transition-all duration-300 hover:scale-105">
                 <Home size={16} />
                 Property Listing
               </TabsTrigger>
-              <TabsTrigger value="property-service" className="flex items-center gap-2">
+              <TabsTrigger value="property-service" className="flex items-center gap-2 transition-all duration-300 hover:scale-105">
                 <Wrench size={16} />
                 Property Service
               </TabsTrigger>
             </TabsList>
 
             {/* Property Listing Chats */}
-            <TabsContent value="property-listing" className="space-y-3 mt-4">
-              {propertyChats.map((chat) => (
+            <TabsContent value="property-listing" className="space-y-3 mt-4 animate-fade-in">
+              {propertyChats.map((chat, index) => (
                 <Card 
                   key={chat.id} 
-                  className="cursor-pointer hover:shadow-md transition-shadow"
+                  className="cursor-pointer hover:shadow-md transition-all duration-300 hover:scale-105 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
                   onClick={() => openDirectChat(chat, 'property')}
                 >
                   <CardContent className="p-4">
@@ -288,11 +289,12 @@ const Chat = () => {
             </TabsContent>
 
             {/* Property Service Chats */}
-            <TabsContent value="property-service" className="space-y-3 mt-4">
-              {serviceChats.map((chat) => (
+            <TabsContent value="property-service" className="space-y-3 mt-4 animate-fade-in">
+              {serviceChats.map((chat, index) => (
                 <Card 
                   key={chat.id} 
-                  className="cursor-pointer hover:shadow-md transition-shadow"
+                  className="cursor-pointer hover:shadow-md transition-all duration-300 hover:scale-105 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
                   onClick={() => openDirectChat(chat, 'service')}
                 >
                   <CardContent className="p-4">

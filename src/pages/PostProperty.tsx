@@ -13,9 +13,9 @@ const PostProperty = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background animate-fade-in">
         {/* Header */}
-        <div className="bg-card border-b border-border px-3 sm:px-4 py-3 flex items-center gap-3">
+        <div className="bg-card border-b border-border px-3 sm:px-4 py-3 flex items-center gap-3 animate-slide-in-right">
           <Button 
             variant="ghost" 
             size="sm" 
@@ -28,11 +28,11 @@ const PostProperty = () => {
         </div>
 
         {/* Tabs */}
-        <div className="bg-card px-3 sm:px-4">
+        <div className="bg-card px-3 sm:px-4 animate-scale-in">
           <div className="flex gap-0 border-b border-border">
             <button
               onClick={() => setActiveTab("listing")}
-              className={`flex-1 py-3 px-2 sm:px-4 text-center font-medium rounded-t-xl transition-colors text-xs sm:text-sm ${
+              className={`flex-1 py-3 px-2 sm:px-4 text-center font-medium rounded-t-xl transition-all duration-300 hover:scale-105 text-xs sm:text-sm ${
                 activeTab === "listing" 
                   ? "bg-primary text-primary-foreground" 
                   : "bg-muted text-muted-foreground"
@@ -42,7 +42,7 @@ const PostProperty = () => {
             </button>
             <button
               onClick={() => setActiveTab("service")}
-              className={`flex-1 py-3 px-2 sm:px-4 text-center font-medium rounded-t-xl transition-colors text-xs sm:text-sm ${
+              className={`flex-1 py-3 px-2 sm:px-4 text-center font-medium rounded-t-xl transition-all duration-300 hover:scale-105 text-xs sm:text-sm ${
                 activeTab === "service" 
                   ? "bg-primary text-primary-foreground" 
                   : "bg-muted text-muted-foreground"
@@ -53,15 +53,15 @@ const PostProperty = () => {
           </div>
         </div>
 
-        <div className="p-3 sm:p-4 lg:p-6">
+        <div className="p-3 sm:p-4 lg:p-6 animate-fade-in">
           {activeTab === "listing" ? <PropertyListingForm /> : <PropertyServiceForm />}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-6 mt-6 border-t border-border">
-            <Button variant="outline" className="flex-1 text-sm sm:text-base">
+          <div className="flex flex-col sm:flex-row gap-3 pt-6 mt-6 border-t border-border animate-scale-in">
+            <Button variant="outline" className="flex-1 text-sm sm:text-base transition-all duration-300 hover:scale-105">
               Cancel
             </Button>
-            <Button className="flex-1 text-sm sm:text-base">
+            <Button className="flex-1 text-sm sm:text-base transition-all duration-300 hover:scale-105">
               Submit
             </Button>
           </div>

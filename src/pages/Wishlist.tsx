@@ -10,9 +10,9 @@ const Wishlist = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background animate-fade-in">
         {/* Header */}
-        <div className="bg-card border-b border-border px-4 py-3 flex items-center gap-3">
+        <div className="bg-card border-b border-border px-4 py-3 flex items-center gap-3 animate-slide-in-right">
           <Button 
             variant="ghost" 
             size="sm" 
@@ -28,11 +28,11 @@ const Wishlist = () => {
         </div>
 
         {/* Tabs */}
-        <div className="bg-card px-4">
+        <div className="bg-card px-4 animate-scale-in">
           <div className="flex gap-0 border-b border-border">
             <button
               onClick={() => setActiveTab("listing")}
-              className={`flex-1 py-3 px-4 text-center font-medium rounded-t-xl transition-colors ${
+              className={`flex-1 py-3 px-4 text-center font-medium rounded-t-xl transition-all duration-300 hover:scale-105 ${
                 activeTab === "listing" 
                   ? "bg-primary text-primary-foreground" 
                   : "bg-muted text-muted-foreground"
@@ -42,7 +42,7 @@ const Wishlist = () => {
             </button>
             <button
               onClick={() => setActiveTab("service")}
-              className={`flex-1 py-3 px-4 text-center font-medium rounded-t-xl transition-colors ${
+              className={`flex-1 py-3 px-4 text-center font-medium rounded-t-xl transition-all duration-300 hover:scale-105 ${
                 activeTab === "service" 
                   ? "bg-primary text-primary-foreground" 
                   : "bg-muted text-muted-foreground"
@@ -54,17 +54,17 @@ const Wishlist = () => {
         </div>
 
         {/* Empty State */}
-        <div className="flex flex-col items-center justify-center py-32 px-8">
-          <div className="relative mb-8">
+        <div className="flex flex-col items-center justify-center py-32 px-8 animate-fade-in">
+          <div className="relative mb-8 animate-scale-in">
             <Folder size={80} className="text-muted-foreground/50" />
             <Search size={32} className="absolute -right-2 -bottom-2 text-muted-foreground/50" />
-            <div className="absolute top-4 left-4 w-8 h-6 bg-muted-foreground/20 rounded"></div>
-            <div className="absolute top-8 right-6 w-4 h-4 bg-muted-foreground/20 rounded-full"></div>
-            <div className="absolute bottom-8 left-6 w-6 h-4 bg-muted-foreground/20 rounded"></div>
+            <div className="absolute top-4 left-4 w-8 h-6 bg-muted-foreground/20 rounded animate-pulse"></div>
+            <div className="absolute top-8 right-6 w-4 h-4 bg-muted-foreground/20 rounded-full animate-pulse"></div>
+            <div className="absolute bottom-8 left-6 w-6 h-4 bg-muted-foreground/20 rounded animate-pulse"></div>
           </div>
           
-          <h3 className="text-lg font-medium mb-2">No Result</h3>
-          <p className="text-muted-foreground text-center">
+          <h3 className="text-lg font-medium mb-2 animate-fade-in">No Result</h3>
+          <p className="text-muted-foreground text-center animate-fade-in">
             We're stocking the shelves stay tuned !
           </p>
         </div>

@@ -141,6 +141,18 @@ const PropertyListingForm = () => {
         </Select>
       </div>
 
+      {/* Property ID */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Property ID</Label>
+        <Input 
+          placeholder="Enter unique property ID"
+          className="text-sm sm:text-base"
+        />
+        <p className="text-xs sm:text-sm text-muted-foreground">
+          Provide a unique identifier for your property
+        </p>
+      </div>
+
       {/* Property Location */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Property location</Label>
