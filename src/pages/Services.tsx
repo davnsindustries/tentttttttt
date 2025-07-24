@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft, Search, Filter } from "lucide-react";
+import { ArrowLeft, Search, Filter, Snowflake, Zap, Wrench, Paintbrush, Hammer, Building, TreePine, Truck, Drill, Pickaxe, Shield, Thermometer, Wifi, Camera, Car, Lightbulb, Droplets } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,68 +16,28 @@ const Services = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const services = [
-    {
-      id: "1",
-      icon: "❄️",
-      title: "AC Services",
-      provider: "Expert AC Services",
-      rating: 4.8,
-      location: "Coimbatore",
-      price: "₹500 onwards"
-    },
-    {
-      id: "2", 
-      icon: "⚡",
-      title: "Electrical Services",
-      provider: "PowerFix Solutions",
-      rating: 4.6,
-      location: "Chennai",
-      price: "₹300 onwards"
-    },
-    {
-      id: "3",
-      icon: "🔧",
-      title: "Plumbing Services", 
-      provider: "AquaFix Plumbers",
-      rating: 4.7,
-      location: "Bangalore",
-      price: "₹400 onwards"
-    },
-    {
-      id: "4",
-      icon: "🎨",
-      title: "Painting Services",
-      provider: "ColorCraft Painters", 
-      rating: 4.5,
-      location: "Coimbatore",
-      price: "₹200 onwards"
-    },
-    {
-      id: "5",
-      icon: "🔨",
-      title: "Carpentry Services",
-      provider: "WoodWorks Pro",
-      rating: 4.9,
-      location: "Chennai", 
-      price: "₹600 onwards"
-    },
-    {
-      id: "6",
-      icon: "🏗️",
-      title: "Civil Mason",
-      provider: "BuildRight Masons",
-      rating: 4.4,
-      location: "Trichy",
-      price: "₹800 onwards"
-    }
+    { id: "1", icon: Snowflake, title: "AC Services" },
+    { id: "2", icon: Zap, title: "Electrical Services" },
+    { id: "3", icon: Wrench, title: "Plumbing Services" },
+    { id: "4", icon: Paintbrush, title: "Painting Services" },
+    { id: "5", icon: Hammer, title: "Carpentry Services" },
+    { id: "6", icon: Building, title: "Civil Mason" },
+    { id: "7", icon: TreePine, title: "Landscaping" },
+    { id: "8", icon: Truck, title: "Moving Services" },
+    { id: "9", icon: Drill, title: "Drilling Services" },
+    { id: "10", icon: Shield, title: "Waterproofing" },
+    { id: "11", icon: Thermometer, title: "HVAC Services" },
+    { id: "12", icon: Wifi, title: "Internet Installation" },
+    { id: "13", icon: Camera, title: "Security Systems" },
+    { id: "14", icon: Car, title: "Garage Services" },
+    { id: "15", icon: Lightbulb, title: "Lighting Services" },
+    { id: "16", icon: Droplets, title: "Water Services" }
   ];
 
   const filteredServices = services.filter(service => {
     return (
-      (searchTerm === "" || service.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-       service.provider.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (serviceCategory === "" || service.title.toLowerCase().includes(serviceCategory.toLowerCase())) &&
-      (location === "" || service.location.toLowerCase().includes(location.toLowerCase()))
+      (searchTerm === "" || service.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (serviceCategory === "" || service.title.toLowerCase().includes(serviceCategory.toLowerCase()))
     );
   });
 
@@ -157,25 +117,18 @@ const Services = () => {
               )}
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-              {filteredServices.map((service) => (
-                <div key={service.id} className="space-y-2">
+            <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+              {filteredServices.map((service) => {
+                const IconComponent = service.icon;
+                return (
                   <ServiceCard
-                    icon={<span className="text-xl sm:text-2xl">{service.icon}</span>}
+                    key={service.id}
+                    icon={<IconComponent size={24} />}
                     title={service.title}
                     onClick={() => navigate('/service-details')}
                   />
-                  <div className="text-center space-y-1">
-                    <p className="text-xs text-muted-foreground">{service.provider}</p>
-                    <div className="flex items-center justify-center gap-1">
-                      <span className="text-yellow-500">⭐</span>
-                      <span className="text-xs font-medium">{service.rating}</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{service.location}</p>
-                    <p className="text-xs font-medium text-tent-primary">{service.price}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {filteredServices.length === 0 && (
