@@ -15,7 +15,7 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [propertyType, setPropertyType] = useState("all");
   const [priceRange, setPriceRange] = useState("all");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
   // Tamil Nadu districts
@@ -68,7 +68,7 @@ const Home = () => {
       (searchTerm === "" || property.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
        property.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (propertyType === "all" || property.type.toLowerCase().includes(propertyType.toLowerCase())) &&
-      (selectedDistrict === "" || property.location.toLowerCase().includes(selectedDistrict.toLowerCase()))
+      (selectedDistrict === "all" || property.location.toLowerCase().includes(selectedDistrict.toLowerCase()))
     );
   });
 
@@ -158,7 +158,7 @@ const Home = () => {
                     <SelectValue placeholder="Select District" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border shadow-lg z-50 max-h-[200px] overflow-y-auto">
-                    <SelectItem value="">All Districts</SelectItem>
+                    <SelectItem value="all" className="hover:bg-accent hover:text-accent-foreground">All Districts</SelectItem>
                     {districts.map((district) => (
                       <SelectItem key={district} value={district} className="hover:bg-accent hover:text-accent-foreground">
                         {district}

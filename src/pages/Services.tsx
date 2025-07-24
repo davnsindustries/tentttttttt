@@ -12,8 +12,8 @@ import ServiceCard from "@/components/ServiceCard";
 const Services = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [serviceCategory, setServiceCategory] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [serviceCategory, setServiceCategory] = useState("all");
+  const [selectedDistrict, setSelectedDistrict] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [showAllServices, setShowAllServices] = useState(false);
 
@@ -50,7 +50,7 @@ const Services = () => {
   const filteredServices = services.filter(service => {
     return (
       (searchTerm === "" || service.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (serviceCategory === "" || service.title.toLowerCase().includes(serviceCategory.toLowerCase()))
+      (serviceCategory === "all" || service.title.toLowerCase().includes(serviceCategory.toLowerCase()))
     );
   });
 
@@ -101,7 +101,7 @@ const Services = () => {
                     <SelectValue placeholder="Service Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Services</SelectItem>
+                    <SelectItem value="all">All Services</SelectItem>
                     <SelectItem value="ac">AC Services</SelectItem>
                     <SelectItem value="electrical">Electrical</SelectItem>
                     <SelectItem value="plumbing">Plumbing</SelectItem>
@@ -116,7 +116,7 @@ const Services = () => {
                     <SelectValue placeholder="Select District" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border shadow-lg z-50 max-h-[200px] overflow-y-auto">
-                    <SelectItem value="">All Districts</SelectItem>
+                    <SelectItem value="all" className="hover:bg-accent hover:text-accent-foreground">All Districts</SelectItem>
                     {districts.map((district) => (
                       <SelectItem key={district} value={district} className="hover:bg-accent hover:text-accent-foreground">
                         {district}
