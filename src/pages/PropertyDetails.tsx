@@ -1,5 +1,5 @@
 
-import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User } from "lucide-react";
+import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -235,9 +235,27 @@ const PropertyDetails = () => {
             <div className="text-center sm:text-left">
               <div className="text-lg sm:text-xl font-bold text-tent-primary">Rs.599 / Per Sq.ft</div>
             </div>
-            <Button variant="hero" size="lg" className="px-6 sm:px-8 w-full sm:w-auto">
-              Book Now
-            </Button>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="flex items-center gap-2 flex-1 sm:flex-none transition-all duration-300 hover:scale-105"
+                onClick={() => navigate('/chat', { 
+                  state: { 
+                    name: ownerDetails.name, 
+                    avatar: ownerDetails.name.charAt(0).toUpperCase(),
+                    property: "Om Aathi Parasakthi Nagar",
+                    type: 'property'
+                  } 
+                })}
+              >
+                <MessageCircle size={16} />
+                Chat Now
+              </Button>
+              <Button variant="hero" size="lg" className="flex-1 sm:flex-none transition-all duration-300 hover:scale-105">
+                Book Now
+              </Button>
+            </div>
           </div>
         </div>
       </div>

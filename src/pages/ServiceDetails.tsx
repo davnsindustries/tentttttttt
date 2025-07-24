@@ -1,5 +1,5 @@
 
-import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, Star } from "lucide-react";
+import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, Star, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -223,12 +223,29 @@ const ServiceDetails = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="flex-1 sm:flex-none"
+                className="flex items-center gap-2 flex-1 sm:flex-none transition-all duration-300 hover:scale-105"
+                onClick={() => navigate('/chat', { 
+                  state: { 
+                    name: providerDetails.ownerName, 
+                    avatar: providerDetails.ownerName.charAt(0).toUpperCase(),
+                    service: providerDetails.name,
+                    type: 'service'
+                  } 
+                })}
+              >
+                <MessageCircle size={16} />
+                Chat Now
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="flex items-center gap-2 flex-1 sm:flex-none transition-all duration-300 hover:scale-105"
                 onClick={() => window.open(`tel:${providerDetails.phone}`)}
               >
+                <Phone size={16} />
                 Call Now
               </Button>
-              <Button variant="hero" size="lg" className="flex-1 sm:flex-none">
+              <Button variant="hero" size="lg" className="flex-1 sm:flex-none transition-all duration-300 hover:scale-105">
                 Book Service
               </Button>
             </div>
