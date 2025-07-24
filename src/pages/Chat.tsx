@@ -130,9 +130,9 @@ const Chat = () => {
   if (isDirectChat) {
     return (
       <Layout>
-        <div className="min-h-screen bg-background flex flex-col">
-          {/* Header */}
-          <div className="bg-card border-b border-border px-4 py-3 flex items-center justify-between">
+        <div className="h-screen bg-background flex flex-col">
+          {/* Header - Sticky */}
+          <div className="bg-card border-b border-border px-4 py-3 flex items-center justify-between sticky top-0 z-10">
             <div className="flex items-center gap-3">
               <Button 
                 variant="ghost" 
@@ -166,15 +166,15 @@ const Chat = () => {
             </div>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Messages - Scrollable */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} animate-fade-in`}
               >
                 <div
-                  className={`max-w-[80%] p-3 rounded-lg ${
+                  className={`max-w-[80%] p-3 rounded-lg transition-all duration-200 ${
                     msg.sender === 'me'
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted'
@@ -191,8 +191,8 @@ const Chat = () => {
             ))}
           </div>
 
-          {/* Message Input */}
-          <div className="bg-card border-t border-border p-4">
+          {/* Message Input - Sticky */}
+          <div className="bg-card border-t border-border p-4 sticky bottom-0">
             <div className="flex items-center gap-3">
               <Button variant="ghost" size="sm" className="p-2">
                 <Smile size={20} className="text-muted-foreground" />
@@ -207,7 +207,7 @@ const Chat = () => {
                 />
                 <Button 
                   size="sm" 
-                  className="absolute right-1 top-1 rounded-full p-2"
+                  className="absolute right-1 top-1 rounded-full p-2 hover:scale-105 transition-transform"
                   onClick={sendMessage}
                 >
                   <Send size={16} />
