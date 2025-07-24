@@ -10,6 +10,7 @@ import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import PostProperty from "./pages/PostProperty";
 import Services from "./pages/Services";
+import ServiceProviders from "./pages/ServiceProviders";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import PropertyDetails from "./pages/PropertyDetails";
@@ -34,8 +35,10 @@ const App = () => (
           <Route path="/chat" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/service-providers/:serviceId" element={<ServiceProviders />} />
           <Route path="/property/:id" element={<PropertyDetails />} />
           <Route path="/service-details" element={<ServiceDetails />} />
+          <Route path="/service-details/:providerId" element={<ServiceDetails />} />
           <Route path="/help" element={<HelpDesk />} />
           <Route path="/about" element={<AboutApp />} />
           <Route path="/how-it-works" element={<HowItWorks />} />

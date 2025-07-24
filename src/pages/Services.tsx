@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { ArrowLeft, Search, Filter, Snowflake, Zap, Wrench, Paintbrush, Hammer, Building, TreePine, Truck, Drill, Pickaxe, Shield, Thermometer, Wifi, Camera, Car, Lightbulb, Droplets } from "lucide-react";
+import { ArrowLeft, Search, Filter, ChevronDown, ChevronUp, Snowflake, Zap, Wrench, Paintbrush, Hammer, Building, TreePine, Truck, Drill, Pickaxe, Shield, Thermometer, Wifi, Camera, Car, Lightbulb, Droplets } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Layout from "@/components/Layout";
 import ServiceCard from "@/components/ServiceCard";
 
@@ -14,6 +15,7 @@ const Services = () => {
   const [serviceCategory, setServiceCategory] = useState("");
   const [location, setLocation] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [showAllServices, setShowAllServices] = useState(false);
 
   const services = [
     { id: "1", icon: Snowflake, title: "AC Services" },
@@ -40,6 +42,9 @@ const Services = () => {
       (serviceCategory === "" || service.title.toLowerCase().includes(serviceCategory.toLowerCase()))
     );
   });
+
+  const topServices = filteredServices.slice(0, 4);
+  const remainingServices = filteredServices.slice(4);
 
   return (
     <Layout>
@@ -117,19 +122,60 @@ const Services = () => {
               )}
             </div>
 
-            <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-              {filteredServices.map((service) => {
+            {/* Top 4 Services */}
+            <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-4">
+              {topServices.map((service) => {
                 const IconComponent = service.icon;
                 return (
                   <ServiceCard
                     key={service.id}
                     icon={<IconComponent size={24} />}
                     title={service.title}
-                    onClick={() => navigate('/service-details')}
+                    onClick={() => navigate(`/service-providers/${service.id}`, { 
+                      state: { serviceName: service.title }
+                    })}
                   />
                 );
               })}
             </div>
+
+            {/* Collapsible remaining services */}
+            {remainingServices.length > 0 && (
+              <Collapsible open={showAllServices} onOpenChange={setShowAllServices}>
+                <CollapsibleTrigger asChild>
+                  <Button variant="outline" className="w-full mb-4">
+                    {showAllServices ? (
+                      <>
+                        <ChevronUp size={16} className="mr-2" />
+                        Show Less Services
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown size={16} className="mr-2" />
+                        Show More Services ({remainingServices.length})
+                      </>
+                    )}
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                    {remainingServices.map((service) => {
+                      const IconComponent = service.icon;
+                      return (
+                        <ServiceCard
+                          key={service.id}
+                          icon={<IconComponent size={24} />}
+                          title={service.title}
+                          onClick={() => navigate(`/service-providers/${service.id}`, { 
+                            state: { serviceName: service.title }
+                          })}
+                        />
+                      );
+                    })}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
 
             {filteredServices.length === 0 && (
               <div className="text-center py-8">
