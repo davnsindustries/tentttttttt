@@ -1,13 +1,28 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { X, Upload } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { X, Upload, Plus, Trash2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
+interface Block {
+  id: string;
+  name: string;
+  pricePerUnit: string;
+  measurementType: string;
+  totalUnits: string;
+  availableUnits: string;
+}
 
 const PropertyListingForm = () => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [amenities, setAmenities] = useState<string[]>([]);
+  const [newAmenity, setNewAmenity] = useState("");
+  const [proximities, setProximities] = useState<string[]>([]);
+  const [newProximity, setNewProximity] = useState("");
+  const [blocks, setBlocks] = useState<Block[]>([]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -19,9 +34,62 @@ const PropertyListingForm = () => {
     setUploadedImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  const addAmenity = () => {
+    if (newAmenity.trim() && !amenities.includes(newAmenity.trim())) {
+      setAmenities(prev => [...prev, newAmenity.trim()]);
+      setNewAmenity("");
+    }
+  };
+
+  const removeAmenity = (amenity: string) => {
+    setAmenities(prev => prev.filter(a => a !== amenity));
+  };
+
+  const addProximity = () => {
+    if (newProximity.trim() && !proximities.includes(newProximity.trim())) {
+      setProximities(prev => [...prev, newProximity.trim()]);
+      setNewProximity("");
+    }
+  };
+
+  const removeProximity = (proximity: string) => {
+    setProximities(prev => prev.filter(p => p !== proximity));
+  };
+
+  const addBlock = () => {
+    const newBlock: Block = {
+      id: Date.now().toString(),
+      name: "",
+      pricePerUnit: "",
+      measurementType: "sqft",
+      totalUnits: "",
+      availableUnits: ""
+    };
+    setBlocks(prev => [...prev, newBlock]);
+  };
+
+  const updateBlock = (id: string, field: keyof Block, value: string) => {
+    setBlocks(prev => prev.map(block => 
+      block.id === id ? { ...block, [field]: value } : block
+    ));
+  };
+
+  const removeBlock = (id: string) => {
+    setBlocks(prev => prev.filter(block => block.id !== id));
+  };
+
+  const measurementTypes = [
+    { value: "sqft", label: "Square Feet" },
+    { value: "sqm", label: "Square Meters" },
+    { value: "acres", label: "Acres" },
+    { value: "cents", label: "Cents" },
+    { value: "guntha", label: "Guntha" },
+    { value: "bigha", label: "Bigha" }
+  ];
+
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Property Images - Moved to top */}
+      {/* Property Images */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Property Images</Label>
         <div className="space-y-4">
@@ -74,6 +142,24 @@ const PropertyListingForm = () => {
         </div>
       </div>
 
+      {/* Property Name */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Property Name</Label>
+        <Input 
+          placeholder="Enter property name"
+          className="text-sm sm:text-base"
+        />
+      </div>
+
+      {/* Property Description */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Property Description</Label>
+        <Textarea 
+          placeholder="Describe your property in detail..."
+          className="text-sm sm:text-base min-h-[100px]"
+        />
+      </div>
+
       {/* Legal Name */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Legal name</Label>
@@ -94,7 +180,7 @@ const PropertyListingForm = () => {
         </p>
       </div>
 
-      {/* Phone Number - Added */}
+      {/* Phone Number */}
       <div className="space-y-3">
         <Label className="text-sm sm:text-base font-medium">Phone number</Label>
         <Input placeholder="Phone number" className="text-sm sm:text-base" />
@@ -133,10 +219,12 @@ const PropertyListingForm = () => {
             <SelectValue placeholder="Select property type" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="residential-plot">Residential Plot</SelectItem>
+            <SelectItem value="commercial-land">Commercial Land</SelectItem>
+            <SelectItem value="farm-land">Farm Land</SelectItem>
+            <SelectItem value="individual-house">Individual House</SelectItem>
+            <SelectItem value="apartments">Apartments</SelectItem>
             <SelectItem value="villa">Villa</SelectItem>
-            <SelectItem value="apartment">Apartment</SelectItem>
-            <SelectItem value="plot">Plot</SelectItem>
-            <SelectItem value="house">House</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -150,6 +238,182 @@ const PropertyListingForm = () => {
         />
         <p className="text-xs sm:text-sm text-muted-foreground">
           Provide a unique identifier for your property
+        </p>
+      </div>
+
+      {/* Price Details */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Price Details</Label>
+        <div className="space-y-3">
+          <Input 
+            placeholder="Starting price (e.g., Rs. 50,000)"
+            className="text-sm sm:text-base"
+          />
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Enter the starting price for your property
+          </p>
+        </div>
+      </div>
+
+      {/* Blocks Section */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <Label className="text-sm sm:text-base font-medium">Blocks</Label>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={addBlock}
+            className="flex items-center gap-2"
+          >
+            <Plus size={16} />
+            Add Block
+          </Button>
+        </div>
+        
+        {blocks.map((block) => (
+          <Card key={block.id} className="p-4">
+            <CardContent className="p-0 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium">Block Details</h4>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removeBlock(block.id)}
+                  className="text-destructive hover:text-destructive"
+                >
+                  <Trash2 size={16} />
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <Input
+                  placeholder="Block name"
+                  value={block.name}
+                  onChange={(e) => updateBlock(block.id, 'name', e.target.value)}
+                  className="text-sm"
+                />
+                <Input
+                  placeholder="Price per unit"
+                  value={block.pricePerUnit}
+                  onChange={(e) => updateBlock(block.id, 'pricePerUnit', e.target.value)}
+                  className="text-sm"
+                />
+                <Select
+                  value={block.measurementType}
+                  onValueChange={(value) => updateBlock(block.id, 'measurementType', value)}
+                >
+                  <SelectTrigger className="text-sm">
+                    <SelectValue placeholder="Measurement type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {measurementTypes.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  placeholder="Total units"
+                  value={block.totalUnits}
+                  onChange={(e) => updateBlock(block.id, 'totalUnits', e.target.value)}
+                  className="text-sm"
+                />
+                <Input
+                  placeholder="Available units"
+                  value={block.availableUnits}
+                  onChange={(e) => updateBlock(block.id, 'availableUnits', e.target.value)}
+                  className="text-sm sm:col-span-2"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+        
+        {blocks.length === 0 && (
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Add blocks to organize your property units with different pricing
+          </p>
+        )}
+      </div>
+
+      {/* Amenities */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Amenities</Label>
+        <div className="flex gap-2">
+          <Input
+            placeholder="Add amenity"
+            value={newAmenity}
+            onChange={(e) => setNewAmenity(e.target.value)}
+            className="text-sm sm:text-base"
+            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addAmenity())}
+          />
+          <Button type="button" onClick={addAmenity} size="sm">
+            <Plus size={16} />
+          </Button>
+        </div>
+        
+        {amenities.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {amenities.map((amenity) => (
+              <div
+                key={amenity}
+                className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md text-sm"
+              >
+                <span>{amenity}</span>
+                <button
+                  type="button"
+                  onClick={() => removeAmenity(amenity)}
+                  className="hover:text-destructive"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Proximities */}
+      <div className="space-y-3">
+        <Label className="text-sm sm:text-base font-medium">Proximities</Label>
+        <div className="flex gap-2">
+          <Input
+            placeholder="Add nearby location"
+            value={newProximity}
+            onChange={(e) => setNewProximity(e.target.value)}
+            className="text-sm sm:text-base"
+            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addProximity())}
+          />
+          <Button type="button" onClick={addProximity} size="sm">
+            <Plus size={16} />
+          </Button>
+        </div>
+        
+        {proximities.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {proximities.map((proximity) => (
+              <div
+                key={proximity}
+                className="flex items-center gap-1 bg-secondary/50 text-secondary-foreground px-2 py-1 rounded-md text-sm"
+              >
+                <span>{proximity}</span>
+                <button
+                  type="button"
+                  onClick={() => removeProximity(proximity)}
+                  className="hover:text-destructive"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        
+        <p className="text-xs sm:text-sm text-muted-foreground">
+          Add nearby landmarks, schools, hospitals, etc.
         </p>
       </div>
 

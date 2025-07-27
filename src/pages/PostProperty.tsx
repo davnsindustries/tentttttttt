@@ -59,10 +59,10 @@ const PostProperty = () => {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 pt-6 mt-6 border-t border-border animate-scale-in">
             <Button variant="outline" className="flex-1 text-sm sm:text-base transition-all duration-300 hover:scale-105">
-              Cancel
+              Save as Draft
             </Button>
             <Button className="flex-1 text-sm sm:text-base transition-all duration-300 hover:scale-105">
-              Submit
+              Publish Listing
             </Button>
           </div>
         </div>

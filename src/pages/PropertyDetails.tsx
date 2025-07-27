@@ -1,14 +1,19 @@
 
-import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, MessageCircle } from "lucide-react";
+import { ArrowLeft, Share2, Heart, MapPin, ExternalLink, Phone, Mail, User, MessageCircle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Layout from "@/components/Layout";
 import PropertyImageGallery from "@/components/PropertyImageGallery";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const PropertyDetails = () => {
   const navigate = useNavigate();
+  const [selectedBlock, setSelectedBlock] = useState("");
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
 
   const proximities = [
     "Cancer Institute",
@@ -37,6 +42,65 @@ const PropertyDetails = () => {
     role: "Property Owner"
   };
 
+  // Sample blocks data
+  const blocks = [
+    {
+      id: "block-a",
+      name: "Block A",
+      pricePerUnit: "599",
+      measurementType: "sqft",
+      totalUnits: "50",
+      availableUnits: "35"
+    },
+    {
+      id: "block-b", 
+      name: "Block B",
+      pricePerUnit: "649",
+      measurementType: "sqft",
+      totalUnits: "40",
+      availableUnits: "28"
+    },
+    {
+      id: "block-c",
+      name: "Block C",
+      pricePerUnit: "699",
+      measurementType: "sqft", 
+      totalUnits: "30",
+      availableUnits: "15"
+    }
+  ];
+
+  // Sample bookings data
+  const bookings = [
+    {
+      id: "BK001",
+      userName: "Ahmed Hassan",
+      userAvatar: "AH",
+      blockName: "Block A",
+      bookedDate: "2024-01-15",
+      status: "Confirmed"
+    },
+    {
+      id: "BK002", 
+      userName: "Fatima Khan",
+      userAvatar: "FK",
+      blockName: "Block B",
+      bookedDate: "2024-01-18",
+      status: "Pending"
+    }
+  ];
+
+  const handleBooking = () => {
+    if (!selectedBlock) {
+      alert("Please select a block to book");
+      return;
+    }
+    // Generate unique booking ID
+    const bookingId = `BK${Date.now().toString().slice(-6)}`;
+    alert(`Booking confirmed! Your booking ID is: ${bookingId}`);
+    setShowBookingDialog(false);
+  };
+
   const openGoogleMaps = () => {
     const url = `https://www.google.com/maps?q=${propertyCoordinates.lat},${propertyCoordinates.lng}`;
     window.open(url, '_blank');
@@ -57,10 +121,10 @@ const PropertyDetails = () => {
             <h1 className="text-base sm:text-lg font-semibold">Property details</h1>
             <div className="flex items-center gap-1 sm:gap-2">
               <button className="p-2 rounded-full bg-background hover:bg-muted transition-colors">
-                <Share2 size={18} />
+                <Heart size={16} />
               </button>
               <button className="p-2 rounded-full bg-background hover:bg-muted transition-colors">
-                <Heart size={18} />
+                <Share2 size={18} />
               </button>
             </div>
           </div>
@@ -177,6 +241,77 @@ const PropertyDetails = () => {
             </CardContent>
           </Card>
 
+          {/* Blocks Information */}
+          <Card className="shadow-card">
+            <CardContent className="p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-3">Available Blocks</h3>
+              <div className="space-y-3">
+                {blocks.map((block) => (
+                  <div key={block.id} className="border border-border rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium">{block.name}</h4>
+                      <Badge variant="outline">
+                        {block.availableUnits}/{block.totalUnits} Available
+                      </Badge>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      <p>Price: Rs.{block.pricePerUnit} per {block.measurementType}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Bookings Section */}
+          {bookings.length > 0 && (
+            <Card className="shadow-card">
+              <CardContent className="p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold mb-3">Recent Bookings</h3>
+                <div className="space-y-3">
+                  {bookings.map((booking) => (
+                    <div key={booking.id} className="border border-border rounded-lg p-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <span className="text-primary-foreground text-xs font-medium">
+                              {booking.userAvatar}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">{booking.userName}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {booking.blockName} • {booking.bookedDate}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge variant={booking.status === 'Confirmed' ? 'default' : 'secondary'}>
+                            {booking.status}
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate('/chat', { 
+                              state: { 
+                                name: booking.userName, 
+                                avatar: booking.userAvatar,
+                                property: "Om Aathi Parasakthi Nagar",
+                                type: 'property'
+                              } 
+                            })}
+                          >
+                            Chat
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Property Details */}
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
@@ -196,7 +331,14 @@ const PropertyDetails = () => {
           <Card className="shadow-card">
             <CardContent className="p-4 sm:p-6">
               <h3 className="text-base sm:text-lg font-semibold mb-3">Amenities</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">No amenities available.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {["24/7 Security", "Power Backup", "Water Supply", "Street Lights", "Playground", "Community Hall"].map((amenity, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div className="w-1 h-1 bg-tent-primary rounded-full flex-shrink-0"></div>
+                    <span className="text-xs sm:text-sm text-foreground">{amenity}</span>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
 
@@ -240,6 +382,14 @@ const PropertyDetails = () => {
                 variant="outline" 
                 size="lg" 
                 className="flex items-center gap-2 flex-1 sm:flex-none transition-all duration-300 hover:scale-105"
+              >
+                <Eye size={16} />
+                View Listing
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="flex items-center gap-2 flex-1 sm:flex-none transition-all duration-300 hover:scale-105"
                 onClick={() => navigate('/chat', { 
                   state: { 
                     name: ownerDetails.name, 
@@ -252,9 +402,43 @@ const PropertyDetails = () => {
                 <MessageCircle size={16} />
                 Chat Now
               </Button>
-              <Button variant="hero" size="lg" className="flex-1 sm:flex-none transition-all duration-300 hover:scale-105">
-                Book Now
-              </Button>
+              <Dialog open={showBookingDialog} onOpenChange={setShowBookingDialog}>
+                <DialogTrigger asChild>
+                  <Button variant="hero" size="lg" className="flex-1 sm:flex-none transition-all duration-300 hover:scale-105">
+                    Book Now
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Book Property</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-sm font-medium">Select Block</Label>
+                      <Select value={selectedBlock} onValueChange={setSelectedBlock}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose a block" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {blocks.map((block) => (
+                            <SelectItem key={block.id} value={block.id}>
+                              {block.name} - Rs.{block.pricePerUnit}/{block.measurementType} ({block.availableUnits} available)
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" onClick={() => setShowBookingDialog(false)} className="flex-1">
+                        Cancel
+                      </Button>
+                      <Button onClick={handleBooking} className="flex-1">
+                        Confirm Booking
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
